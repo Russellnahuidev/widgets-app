@@ -34,10 +34,16 @@ const appMenuItems = <MenuItems>[
     icon: Icons.refresh_rounded,
   ),
   MenuItems(
-    title: ' Snackbars y Dialogs',
+    title: 'Snackbars y Dialogs',
     subTitle: 'Indicadores en pantalla',
     link: '/snackbars',
-
     icon: Icons.info_outline,
+  ),
+
+  MenuItems(
+    title: 'Animated Container',
+    subTitle: 'Statefuf widget animado',
+    link: '/animated',
+    icon: Icons.check_box_outline_blank_rounded,
   ),
 ];
