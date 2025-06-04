@@ -7,6 +7,7 @@ environment:
   sdk: ^3.8.1
 
 dependencies:
+  animate_do: ^4.2.0
   flutter:
     sdk: flutter
   go_router: ^15.1.2
@@ -18,3 +19,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/
+    #- assets/icons/
