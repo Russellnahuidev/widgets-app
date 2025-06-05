@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:widgets_app/config/menu/menu_items.dart';
 
 class SideMenu extends StatefulWidget {
-  const SideMenu({super.key});
+  final GlobalKey<ScaffoldState>? scaffoldKey;
+  const SideMenu({super.key, required this.scaffoldKey});
 
   @override
   State<SideMenu> createState() => _SideMenuState();
@@ -12,24 +15,50 @@ class _SideMenuState extends State<SideMenu> {
 
   @override
   Widget build(BuildContext context) {
+    final hasNotch = MediaQuery.of(context).viewPadding.top > 35;
+
     return NavigationDrawer(
       selectedIndex: navDrawerIndex,
-      onDestinationSelected: (int index) {
+      onDestinationSelected: (value) {
         setState(() {
-          navDrawerIndex = index;
+          navDrawerIndex = value;
         });
-        // Handle navigation here, e.g., using GoRouter or Navigator
-        // context.push('/some_route'); // Example of navigation
+        final menuItem = appMenuItems[value];
+        context.push(menuItem.link);
+        widget.scaffoldKey?.currentState?.closeDrawer();
       },
       children: [
-        NavigationDrawerDestination(
-          icon: Icon(Icons.add),
-          label: Text('Home Screen'),
+        Padding(
+          padding: EdgeInsets.fromLTRB(28, hasNotch ? 0 : 20, 15, 10),
+          child: Text('Main'),
         ),
-        NavigationDrawerDestination(
-          icon: Icon(Icons.add_shopping_cart_rounded),
-          label: Text('Otra pantalla'),
+
+        ...appMenuItems
+            .sublist(0, 3)
+            .map(
+              (item) => NavigationDrawerDestination(
+                icon: Icon(item.icon),
+                label: Text(item.title),
+              ),
+            ),
+
+        Padding(
+          padding: const EdgeInsets.fromLTRB(28, 16, 28, 10),
+          child: Divider(),
         ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(28, 10, 16, 10),
+          child: Text('Main'),
+        ),
+
+        ...appMenuItems
+            .sublist(3)
+            .map(
+              (item) => NavigationDrawerDestination(
+                icon: Icon(item.icon),
+                label: Text(item.title),
+              ),
+            ),
       ],
     );
   }
